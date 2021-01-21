@@ -16,12 +16,19 @@
 
 package com.alibaba.nacos.core.distributed.raft.utils;
 
+import java.io.File;
+import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.alibaba.nacos.common.utils.ThreadUtils;
 import com.alibaba.nacos.consistency.SerializeFactory;
 import com.alibaba.nacos.consistency.entity.GetRequest;
-import com.alibaba.nacos.consistency.entity.Log;
 import com.alibaba.nacos.consistency.entity.ReadRequest;
-import com.alibaba.nacos.consistency.entity.Response;
 import com.alibaba.nacos.consistency.entity.WriteRequest;
 import com.alibaba.nacos.core.cluster.ServerMemberManager;
 import com.alibaba.nacos.core.distributed.raft.JRaftServer;
@@ -29,8 +36,8 @@ import com.alibaba.nacos.core.distributed.raft.processor.NacosGetRequestProcesso
 import com.alibaba.nacos.core.distributed.raft.processor.NacosLogProcessor;
 import com.alibaba.nacos.core.distributed.raft.processor.NacosReadRequestProcessor;
 import com.alibaba.nacos.core.distributed.raft.processor.NacosWriteRequestProcessor;
-import com.alibaba.nacos.sys.utils.ApplicationUtils;
 import com.alibaba.nacos.core.utils.Loggers;
+import com.alibaba.nacos.sys.utils.ApplicationUtils;
 import com.alibaba.nacos.sys.utils.DiskUtils;
 import com.alipay.sofa.jraft.CliService;
 import com.alipay.sofa.jraft.RouteTable;
@@ -43,15 +50,6 @@ import com.alipay.sofa.jraft.rpc.RpcServer;
 import com.alipay.sofa.jraft.rpc.impl.GrpcRaftRpcFactory;
 import com.alipay.sofa.jraft.rpc.impl.MarshallerRegistry;
 import com.alipay.sofa.jraft.util.RpcFactoryHelper;
-
-import java.io.File;
-import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * JRaft utils.
